@@ -44,6 +44,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* ─── Layout ─────────────────────────────── */
   #app {
     display: flex; flex-direction: column;
     height: 100dvh;
@@ -51,6 +52,7 @@
     padding-bottom: var(--safe-bot);
   }
 
+  /* ─── Header ─────────────────────────────── */
   #header {
     flex-shrink: 0;
     background: var(--surface);
@@ -77,6 +79,7 @@
     color: var(--sel-brd);
   }
 
+  /* Month nav */
   #month-nav {
     display: flex; align-items: center; justify-content: space-between;
   }
@@ -94,20 +97,23 @@
     text-align: center; flex: 1;
   }
 
+  /* ─── Stats bar ───────────────────────────── */
   #stats {
     flex-shrink: 0;
-    display: flex; gap: 0;
     background: var(--surface);
     border-bottom: 1px solid var(--border);
   }
+  .stats-row {
+    display: flex;
+  }
   .stat-item {
     flex: 1; text-align: center;
-    padding: 9px 4px;
+    padding: 7px 4px;
     border-right: 1px solid var(--border);
   }
-  .stat-item:last-child { border-right: none; }
+  .stat-item.no-border { border-right: none; }
   .stat-val {
-    font-size: 16px; font-weight: 800; color: var(--acc);
+    font-size: 15px; font-weight: 800; color: var(--acc);
     line-height: 1;
   }
   .stat-val.blue { color: var(--today-brd); }
@@ -117,11 +123,13 @@
     margin-top: 2px;
   }
 
+  /* ─── Calendar ────────────────────────────── */
   #calendar-wrap {
     flex: 1; overflow-y: auto; padding: 12px 10px 16px;
     -webkit-overflow-scrolling: touch;
   }
 
+  /* Day headers */
   #day-headers {
     display: grid; grid-template-columns: repeat(7, 1fr);
     margin-bottom: 6px;
@@ -132,6 +140,7 @@
     letter-spacing: 0.08em; padding: 4px 0;
   }
 
+  /* Grid */
   #day-grid {
     display: grid; grid-template-columns: repeat(7, 1fr);
     gap: 4px;
@@ -151,24 +160,50 @@
   .day-cell:active { transform: scale(0.93); }
   .day-cell.empty { background: transparent; cursor: default; }
   .day-cell.empty:active { transform: none; }
-  .day-cell.today { border-color: var(--today-brd) !important; }
-  .day-num { font-size: 15px; font-weight: 700; line-height: 1; }
-  .day-ore { font-size: 9px; font-weight: 700; line-height: 1; margin-top: 2px; color: inherit; }
 
-  .day-cell.effettiva { background: var(--acc); border-color: var(--acc) !important; }
+  .day-cell.today { border-color: var(--today-brd) !important; }
+  .day-num {
+    font-size: 15px; font-weight: 700; line-height: 1;
+  }
+  .day-ore {
+    font-size: 9px; font-weight: 700; line-height: 1;
+    margin-top: 2px; color: inherit;
+  }
+
+  /* Effettiva */
+  .day-cell.effettiva {
+    background: var(--acc);
+    border-color: var(--acc) !important;
+  }
   .day-cell.effettiva .day-num { color: #fff; }
   .day-cell.effettiva .day-ore { color: rgba(255,255,255,0.75); }
 
-  .day-cell.pianificata { background: var(--plan-bg); border-color: var(--plan-brd) !important; }
+  /* Pianificata */
+  .day-cell.pianificata {
+    background: var(--plan-bg);
+    border-color: var(--plan-brd) !important;
+  }
   .day-cell.pianificata .day-num { color: var(--acc); opacity: 0.7; }
   .day-cell.pianificata .day-ore { color: var(--acc); opacity: 0.6; }
 
-  .day-cell.selected { border-color: var(--sel-brd) !important; background: var(--sel-bg) !important; }
+  /* Selected (multi) */
+  .day-cell.selected {
+    border-color: var(--sel-brd) !important;
+    background: var(--sel-bg) !important;
+  }
   .day-cell.selected .day-num { color: var(--sel-brd); }
 
-  .day-cell.weekend:not(.effettiva):not(.pianificata) .day-num { color: var(--text-muted); }
-  .day-cell.past:not(.effettiva):not(.pianificata) .day-num { opacity: 0.45; }
+  /* Weekend dim */
+  .day-cell.weekend:not(.effettiva):not(.pianificata) .day-num {
+    color: var(--text-muted);
+  }
 
+  /* Past dim */
+  .day-cell.past:not(.effettiva):not(.pianificata) .day-num {
+    opacity: 0.45;
+  }
+
+  /* Sel check */
   .sel-check {
     position: absolute; top: 3px; right: 3px;
     width: 14px; height: 14px; border-radius: 50%;
@@ -180,6 +215,7 @@
   }
   .day-cell.selected .sel-check { opacity: 1; }
 
+  /* ─── Multi-action bar ────────────────────── */
   #action-bar {
     flex-shrink: 0;
     background: var(--surface);
@@ -189,8 +225,13 @@
     flex-direction: column; gap: 8px;
   }
   #action-bar.visible { display: flex; }
-  #action-count { font-size: 12px; font-weight: 700; color: var(--text-sec); text-align: center; }
-  #action-row { display: flex; gap: 8px; }
+  #action-count {
+    font-size: 12px; font-weight: 700; color: var(--text-sec);
+    text-align: center;
+  }
+  #action-row {
+    display: flex; gap: 8px;
+  }
   .act-btn {
     flex: 1; font-family: 'Nunito', sans-serif;
     font-size: 13px; font-weight: 800;
@@ -202,6 +243,7 @@
   #btn-apply-plan { background: var(--plan-bg); border: 1.5px solid var(--plan-brd); color: var(--acc); }
   #btn-remove     { background: var(--card); border: 1.5px solid var(--border); color: var(--danger); }
 
+  /* ─── Modal ───────────────────────────────── */
   #modal-overlay {
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.65);
@@ -232,7 +274,10 @@
     text-transform: uppercase;
   }
 
-  #type-row { display: flex; gap: 10px; padding: 0 16px; margin-bottom: 20px; }
+  /* Type selector */
+  #type-row {
+    display: flex; gap: 10px; padding: 0 16px; margin-bottom: 20px;
+  }
   .type-btn {
     flex: 1; font-family: 'Nunito', sans-serif;
     padding: 12px 8px; border-radius: 12px;
@@ -244,6 +289,7 @@
   .type-btn.sel-eff  { background: var(--acc); border-color: var(--acc); color: #fff; }
   .type-btn.sel-plan { background: var(--plan-bg); border-color: var(--plan-brd); color: var(--acc); }
 
+  /* Ore picker */
   #ore-section { padding: 0 16px; margin-bottom: 20px; }
   #ore-label {
     font-size: 11px; font-weight: 700; color: var(--text-sec);
@@ -266,6 +312,7 @@
   }
   #ore-sub { font-size: 11px; color: var(--text-sec); font-weight: 600; }
 
+  /* Quick ore */
   #ore-quick { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
   .qore {
     padding: 5px 12px; border-radius: 8px;
@@ -277,6 +324,7 @@
   .qore:active { background: var(--border); }
   .qore.active { background: var(--acc-dim); border-color: var(--acc-mid); color: var(--acc); }
 
+  /* Modal actions */
   #modal-actions { display: flex; gap: 10px; padding: 0 16px; }
   #btn-delete {
     width: 44px; height: 44px; border-radius: 12px;
@@ -293,11 +341,19 @@
     transition: opacity .15s;
   }
   #btn-save:active { opacity: 0.8; }
+
+  /* No data hint */
+  #hint {
+    text-align: center; padding: 30px 20px;
+    color: var(--text-muted); font-size: 13px; font-weight: 600;
+    display: none;
+  }
 </style>
 </head>
 <body>
 <div id="app">
 
+  <!-- HEADER -->
   <div id="header">
     <div id="header-top">
       <div id="app-title">📋 Registro Presenze</div>
@@ -310,25 +366,39 @@
     </div>
   </div>
 
+  <!-- STATS -->
   <div id="stats">
-    <div class="stat-item">
-      <div class="stat-val" id="st-eff">0</div>
-      <div class="stat-lbl">Effettive</div>
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-val" id="st-eff">0</div>
+        <div class="stat-lbl">Effettive</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val" id="st-ore">0</div>
+        <div class="stat-lbl">Ore fatte</div>
+      </div>
+      <div class="stat-item no-border">
+        <div class="stat-val" id="st-med">–</div>
+        <div class="stat-lbl">Ore/giorno</div>
+      </div>
     </div>
-    <div class="stat-item">
-      <div class="stat-val" id="st-ore">0</div>
-      <div class="stat-lbl">Ore tot.</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-val" id="st-med">-</div>
-      <div class="stat-lbl">Ore/giorno</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-val blue" id="st-pla">0</div>
-      <div class="stat-lbl">Pianif.</div>
+    <div class="stats-row" style="border-top: 1px solid var(--border);">
+      <div class="stat-item">
+        <div class="stat-val blue" id="st-pla">0</div>
+        <div class="stat-lbl">Pianif.</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val blue" id="st-orepla">0</div>
+        <div class="stat-lbl">Ore da fare</div>
+      </div>
+      <div class="stat-item no-border">
+        <div class="stat-val" id="st-tot">0</div>
+        <div class="stat-lbl">Ore totali</div>
+      </div>
     </div>
   </div>
 
+  <!-- CALENDAR -->
   <div id="calendar-wrap">
     <div id="day-headers">
       <div class="dh">L</div><div class="dh">M</div><div class="dh">M</div>
@@ -337,8 +407,10 @@
       <div class="dh" style="color:#5555aa">D</div>
     </div>
     <div id="day-grid"></div>
+    <div id="hint">Tocca un giorno per segnare la presenza</div>
   </div>
 
+  <!-- MULTI ACTION BAR -->
   <div id="action-bar">
     <div id="action-count"></div>
     <div id="action-row">
@@ -348,16 +420,19 @@
     </div>
   </div>
 
-</div>
+</div><!-- /app -->
 
+<!-- MODAL -->
 <div id="modal-overlay" onclick="modalClose(event)">
   <div id="modal">
     <div id="modal-handle"></div>
     <div id="modal-date"></div>
+
     <div id="type-row">
       <button class="type-btn" id="tbtn-eff"  onclick="setType('effettiva')">● Effettiva</button>
       <button class="type-btn" id="tbtn-plan" onclick="setType('pianificata')">◌ Pianificata</button>
     </div>
+
     <div id="ore-section">
       <div id="ore-label">Ore lavorate</div>
       <div id="ore-row">
@@ -377,6 +452,7 @@
         <button class="qore" onclick="setOre(9)">9h</button>
       </div>
     </div>
+
     <div id="modal-actions">
       <button id="btn-delete" onclick="deleteDay()" title="Rimuovi">🗑</button>
       <button id="btn-save" onclick="saveDay()">Salva</button>
@@ -385,26 +461,32 @@
 </div>
 
 <script>
+// ── Constants ────────────────────────────────────────────────
 const STORAGE_KEY = 'presenze_v2';
 const MONTHS_IT = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',
                    'Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
 
+// ── State ────────────────────────────────────────────────────
 const now = new Date();
 let S = {
   year:  now.getFullYear(),
   month: now.getMonth(),
-  data:  {},
+  data:  {},           // { "YYYY-MM-DD": { type, ore } }
   multi: false,
   sel:   new Set(),
   modal: { open: false, key: null, type: 'effettiva', ore: 8 }
 };
 
+// ── Persistence ──────────────────────────────────────────────
 function load() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
   catch { return {}; }
 }
-function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(S.data)); }
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(S.data));
+}
 
+// ── Key helpers ──────────────────────────────────────────────
 function dateKey(y, m, d) {
   return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
 }
@@ -413,28 +495,34 @@ function parseDK(k) {
   return { y, m: m-1, d };
 }
 
+// ── Render calendar ──────────────────────────────────────────
 function render() {
   const { year, month } = S;
-  document.getElementById('month-label').textContent = `${MONTHS_IT[month]} ${year}`;
+  document.getElementById('month-label').textContent =
+    `${MONTHS_IT[month]} ${year}`;
+
   const grid = document.getElementById('day-grid');
   grid.innerHTML = '';
-  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7;
+
+  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7; // Mon=0
   const daysInM  = new Date(year, month+1, 0).getDate();
   const todayKey = dateKey(now.getFullYear(), now.getMonth(), now.getDate());
 
+  // Empty leading cells
   for (let i = 0; i < firstDow; i++) {
     const el = document.createElement('div');
     el.className = 'day-cell empty';
     grid.appendChild(el);
   }
 
+  // Day cells
   for (let d = 1; d <= daysInM; d++) {
     const key = dateKey(year, month, d);
     const entry = S.data[key];
     const dow   = (new Date(year, month, d).getDay() + 6) % 7;
-    const isWeekend  = dow >= 5;
-    const isPast     = key < todayKey;
-    const isToday    = key === todayKey;
+    const isWeekend = dow >= 5;
+    const isPast    = key < todayKey;
+    const isToday   = key === todayKey;
     const isSelected = S.sel.has(key);
 
     const cell = document.createElement('div');
@@ -447,59 +535,82 @@ function render() {
 
     cell.innerHTML = `
       <div class="day-num">${d}</div>
-      ${entry ? `<div class="day-ore">${entry.ore}h</div>` : ''}
+      ${entry ? `<div class="day-ore">${formatOre(entry.ore)}</div>` : ''}
       <div class="sel-check">✓</div>
     `;
+
     cell.addEventListener('click', () => dayClick(key, d));
     grid.appendChild(cell);
   }
+
   renderStats();
 }
 
+function formatOre(ore) {
+  if (!ore) return '';
+  return Number.isInteger(ore) ? `${ore}h` : `${ore}h`;
+}
+
+// ── Stats ────────────────────────────────────────────────────
 function renderStats() {
   const { year, month } = S;
-  let effDays = 0, effOre = 0, planDays = 0;
+  let effDays = 0, effOre = 0, planDays = 0, planOre = 0;
   const daysInM = new Date(year, month+1, 0).getDate();
   for (let d = 1; d <= daysInM; d++) {
     const e = S.data[dateKey(year, month, d)];
     if (!e) continue;
-    if (e.type === 'effettiva')   { effDays++; effOre += (e.ore || 0); }
-    if (e.type === 'pianificata') planDays++;
+    if (e.type === 'effettiva')   { effDays++; effOre  += parseFloat(e.ore) || 0; }
+    if (e.type === 'pianificata') { planDays++; planOre += parseFloat(e.ore) || 0; }
   }
-  document.getElementById('st-eff').textContent = effDays;
-  document.getElementById('st-ore').textContent = effOre % 1 === 0 ? effOre : effOre.toFixed(1);
-  document.getElementById('st-med').textContent = effDays ? (effOre/effDays).toFixed(1) : '–';
-  document.getElementById('st-pla').textContent = planDays;
+  const totOre = effOre + planOre;
+  document.getElementById('st-eff').textContent    = effDays;
+  document.getElementById('st-ore').textContent    = effOre  % 1 === 0 ? effOre  : effOre.toFixed(1);
+  document.getElementById('st-med').textContent    = effDays ? (effOre/effDays).toFixed(1) : '–';
+  document.getElementById('st-pla').textContent    = planDays;
+  document.getElementById('st-orepla').textContent = planOre % 1 === 0 ? planOre : planOre.toFixed(1);
+  document.getElementById('st-tot').textContent    = totOre  % 1 === 0 ? totOre  : totOre.toFixed(1);
 }
 
+// ── Day click ────────────────────────────────────────────────
 function dayClick(key, d) {
   if (S.multi) {
-    if (S.sel.has(key)) S.sel.delete(key); else S.sel.add(key);
-    updateActionBar(); render(); return;
+    if (S.sel.has(key)) S.sel.delete(key);
+    else S.sel.add(key);
+    updateActionBar();
+    render();
+    return;
   }
+  // Open modal
   const entry = S.data[key] || { type: 'effettiva', ore: 8 };
   S.modal = { open: true, key, type: entry.type, ore: entry.ore ?? 8 };
   openModal(key);
 }
 
+// ── Modal ────────────────────────────────────────────────────
 function openModal(key) {
   const { y, m, d } = parseDK(key);
   const dow = ['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica']
               [(new Date(y, m, d).getDay() + 6) % 7];
-  document.getElementById('modal-date').textContent = `${dow}, ${d} ${MONTHS_IT[m]} ${y}`;
+  document.getElementById('modal-date').textContent =
+    `${dow}, ${d} ${MONTHS_IT[m]} ${y}`;
   syncModalUI();
   document.getElementById('modal-overlay').classList.add('open');
 }
 
 function syncModalUI() {
   const { type, ore } = S.modal;
+  // Type buttons
   document.getElementById('tbtn-eff').className  = 'type-btn' + (type === 'effettiva'   ? ' sel-eff'  : '');
   document.getElementById('tbtn-plan').className = 'type-btn' + (type === 'pianificata' ? ' sel-plan' : '');
+  // Ore
   document.getElementById('ore-val').textContent = ore % 1 === 0 ? ore : ore.toFixed(1);
+  // Quick buttons
   document.querySelectorAll('.qore').forEach(b => {
     b.classList.toggle('active', parseFloat(b.textContent) === ore);
   });
-  document.getElementById('btn-delete').style.display = S.data[S.modal.key] ? 'flex' : 'none';
+  // Delete btn visibility
+  document.getElementById('btn-delete').style.display =
+    S.data[S.modal.key] ? 'flex' : 'none';
 }
 
 function setType(t) { S.modal.type = t; syncModalUI(); }
@@ -511,24 +622,30 @@ function adjOre(d) {
 }
 
 function saveDay() {
-  S.data[S.modal.key] = { type: S.modal.type, ore: S.modal.ore };
+  const { key, type, ore } = S.modal;
+  S.data[key] = { type, ore };
   save(); render(); modalClose();
 }
+
 function deleteDay() {
   delete S.data[S.modal.key];
   save(); render(); modalClose();
 }
+
 function modalClose(e) {
   if (e && e.target !== document.getElementById('modal-overlay')) return;
   document.getElementById('modal-overlay').classList.remove('open');
 }
 
+// ── Multi-select ─────────────────────────────────────────────
 function toggleMulti() {
-  S.multi = !S.multi; S.sel.clear();
+  S.multi = !S.multi;
+  S.sel.clear();
   const btn = document.getElementById('btn-multi');
   btn.classList.toggle('active', S.multi);
   btn.textContent = S.multi ? 'Fine' : 'Seleziona';
-  updateActionBar(); render();
+  updateActionBar();
+  render();
 }
 
 function updateActionBar() {
@@ -544,21 +661,36 @@ function updateActionBar() {
 }
 
 function applyMulti(action) {
+  // Determine ore default or show mini picker
+  const ore = 8; // default for bulk; can extend with picker later
   S.sel.forEach(key => {
-    if (action === 'remove') delete S.data[key];
-    else S.data[key] = { type: action, ore: 8 };
+    if (action === 'remove') { delete S.data[key]; }
+    else { S.data[key] = { type: action, ore }; }
   });
-  save(); S.sel.clear(); updateActionBar(); render();
+  save();
+  S.sel.clear();
+  updateActionBar();
+  render();
 }
 
+// ── Month nav ────────────────────────────────────────────────
 function changeMonth(delta) {
   S.month += delta;
   if (S.month < 0)  { S.month = 11; S.year--; }
   if (S.month > 11) { S.month = 0;  S.year++; }
-  S.sel.clear(); updateActionBar(); render();
+  // NON svuotiamo S.sel: la selezione multipla persiste tra mesi
+  if (S.multi) updateActionBar();
+  render();
 }
 
+// ── Boot ─────────────────────────────────────────────────────
 S.data = load();
+// Normalizzazione: assicura che ore sia sempre un numero valido
+Object.keys(S.data).forEach(k => {
+  const e = S.data[k];
+  if (e) e.ore = parseFloat(e.ore) || 8;
+});
+save();
 render();
 </script>
 </body>
